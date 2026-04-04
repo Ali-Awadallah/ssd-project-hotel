@@ -8,13 +8,11 @@ import javafx.collections.ObservableList;
 import service.BackupService;
 import db.DBConnection;
 import security.AuditService;
-import java.io.File;
 import java.sql.*;
 
 public class BackupController {
 
     @FXML private TextArea backupStatus;
-    @FXML private ComboBox<String> backupList;
     @FXML private TableView<BackupRecord> table;
     @FXML private TableColumn<BackupRecord, String> colFileName;
     @FXML private TableColumn<BackupRecord, Long> colSize;
@@ -42,7 +40,6 @@ public class BackupController {
         table.setItems(backupRecords);
 
         refreshHistory();
-        loadBackupFiles();
     }
 
     public void createBackup() {
@@ -52,39 +49,12 @@ public class BackupController {
             backupStatus.setText("Backup created successfully!\nFile: " + backupFile);
 
             refreshHistory();
-            loadBackupFiles();
 
             AuditService.log(currentUserId, "Created database backup: " + backupFile);
 
         } catch (Exception e) {
             backupStatus.setText("Backup failed: " + e.getMessage());
             e.printStackTrace();
-        }
-    }
-
-    public void restoreBackup() {
-        String selected = backupList.getValue();
-        if (selected == null) {
-            backupStatus.setText("Please select a backup file to restore!");
-            return;
-        }
-
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Confirm Restore");
-        confirm.setContentText("WARNING: This will overwrite all current data!\nAre you sure you want to restore from " + selected + "?");
-
-        if (confirm.showAndWait().get() == ButtonType.OK) {
-            try {
-                backupStatus.setText("Restoring backup... This may take a moment.");
-                service.restoreBackup(selected);
-                backupStatus.setText("Restore completed successfully!");
-
-                AuditService.log(currentUserId, "Restored database from backup: " + selected);
-
-            } catch (Exception e) {
-                backupStatus.setText("Restore failed: " + e.getMessage());
-                e.printStackTrace();
-            }
         }
     }
 
@@ -113,19 +83,6 @@ public class BackupController {
         } catch (Exception e) {
             backupStatus.setText("Failed to load backup history: " + e.getMessage());
             e.printStackTrace();
-        }
-    }
-
-    private void loadBackupFiles() {
-        backupList.getItems().clear();
-        File backupDir = new File("backups");
-        if (backupDir.exists()) {
-            File[] files = backupDir.listFiles((dir, name) -> name.endsWith(".sql"));
-            if (files != null) {
-                for (File file : files) {
-                    backupList.getItems().add(file.getAbsolutePath());
-                }
-            }
         }
     }
 

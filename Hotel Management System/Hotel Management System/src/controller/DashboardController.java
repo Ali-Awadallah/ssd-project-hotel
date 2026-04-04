@@ -63,7 +63,7 @@ public class DashboardController {
         }
 
         if (currentUser.canManageBackups()) {
-            addMenuButton("Backup & Restore", this::openBackup, "#16a085");
+            addMenuButton("Backup Management", this::openBackup, "#16a085");
         }
 
         Region spacer = new Region();
