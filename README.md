@@ -29,6 +29,7 @@ admin:admin_passoword123
 
 ### Manager
 The manager can work with reservations, payments, service requests, and reports.
+
 manager:manager_password123
 
 ### Receptionist
