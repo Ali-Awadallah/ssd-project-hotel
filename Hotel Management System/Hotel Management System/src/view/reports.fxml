@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox spacing="20" alignment="TOP_CENTER" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.ReportsController"
+      style="-fx-background-color: #ecf0f1; -fx-padding: 20;">
+
+    <Label text="Reports Dashboard" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <TabPane>
+        <Tab text="Daily Report">
+            <VBox spacing="15" style="-fx-padding: 15;">
+                <DatePicker fx:id="dailyDate" promptText="Select Date"/>
+                <Button text="Generate Daily Report" onAction="#generateDailyReport"
+                        style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+                <TextArea fx:id="dailyReportArea" prefHeight="400" editable="false"
+                          style="-fx-font-family: monospace;"/>
+            </VBox>
+        </Tab>
+
+        <Tab text="Revenue Report">
+            <VBox spacing="15" style="-fx-padding: 15;">
+                <HBox spacing="10">
+                    <DatePicker fx:id="startDate" promptText="Start Date"/>
+                    <DatePicker fx:id="endDate" promptText="End Date"/>
+                </HBox>
+                <Button text="Generate Revenue Report" onAction="#generateRevenueReport"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                <TextArea fx:id="revenueReportArea" prefHeight="400" editable="false"
+                          style="-fx-font-family: monospace;"/>
+            </VBox>
+        </Tab>
+    </TabPane>
+
+</VBox>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.ReservationController">
+
+    <VBox spacing="20" alignment="TOP_CENTER"
+          AnchorPane.topAnchor="0"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0"
+          AnchorPane.bottomAnchor="0">
+
+        <padding>
+            <Insets top="20" left="20" right="20" bottom="20"/>
+        </padding>
+
+        <Label text="Reservation Management"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+        <!-- FORM CARD -->
+        <VBox spacing="10"
+              style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1),5,0,0,2);">
+
+            <Label text="New Reservation" style="-fx-font-weight: bold;"/>
+
+            <TextField fx:id="guestName" promptText="Guest Name *"/>
+
+            <!-- Room ComboBox instead of TextField -->
+            <ComboBox fx:id="roomCombo" promptText="Select Room *">
+                <tooltip>
+                    <Tooltip text="Select a room from the list"/>
+                </tooltip>
+            </ComboBox>
+
+            <TextField fx:id="checkIn" promptText="Check-In Date (YYYY-MM-DD) *"/>
+            <TextField fx:id="checkOut" promptText="Check-Out Date (YYYY-MM-DD) *"/>
+
+            <HBox spacing="10">
+                <Button text="Create Reservation"
+                        onAction="#createReservation"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                <Button text="Clear"
+                        onAction="#clearForm"
+                        style="-fx-background-color: #95a5a6; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
+
+        <!-- TABLE -->
+        <VBox spacing="10" VBox.vgrow="ALWAYS">
+            <Label text="Existing Reservations" style="-fx-font-weight: bold;"/>
+
+            <TableView fx:id="table" prefHeight="400">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="colGuest" text="Guest Name" prefWidth="150"/>
+                    <TableColumn fx:id="colRoom" text="Room" prefWidth="80"/>
+                    <TableColumn fx:id="colCheckIn" text="Check-In" prefWidth="100"/>
+                    <TableColumn fx:id="colCheckOut" text="Check-Out" prefWidth="100"/>
+                    <TableColumn fx:id="colStatus" text="Status" prefWidth="100"/>
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
+            </TableView>
+
+            <HBox spacing="10">
+                <Button text="Delete Selected"
+                        onAction="#deleteReservation"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+                <Button text="Check-In"
+                        onAction="#checkIn"
+                        style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+                <Button text="Check-Out"
+                        onAction="#checkOut"
+                        style="-fx-background-color: #f39c12; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
+
+    </VBox>
+
+</AnchorPane>

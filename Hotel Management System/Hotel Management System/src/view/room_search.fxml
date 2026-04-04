@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox spacing="20" alignment="TOP_CENTER" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.RoomSearchController"
+      style="-fx-background-color: #ecf0f1; -fx-padding: 20;">
+
+    <Label text="Room Search" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <!-- Search Form -->
+    <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 10;">
+        <Label text="Search Criteria" style="-fx-font-weight: bold;"/>
+        <HBox spacing="10">
+            <TextField fx:id="checkIn" promptText="Check-In (YYYY-MM-DD)" HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="checkOut" promptText="Check-Out (YYYY-MM-DD)" HBox.hgrow="ALWAYS"/>
+        </HBox>
+        <ComboBox fx:id="roomType" promptText="Room Type (Optional)"/>
+        <Button text="Search Available Rooms" onAction="#search"
+                style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+    </VBox>
+
+    <!-- Results Table -->
+    <TableView fx:id="table" prefHeight="400">
+        <columns>
+            <TableColumn fx:id="colRoomNumber" text="Room Number" prefWidth="100"/>
+            <TableColumn fx:id="colType" text="Type" prefWidth="100"/>
+            <TableColumn fx:id="colPrice" text="Price/Night" prefWidth="100"/>
+            <TableColumn fx:id="colStatus" text="Status" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+</VBox>

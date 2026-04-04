@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox spacing="20" alignment="TOP_CENTER" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.BackupController"
+      style="-fx-background-color: #ecf0f1; -fx-padding: 20;">
+
+    <Label text="Backup and Restore" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <!-- Backup Section -->
+    <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 10;">
+        <Label text="Create Backup" style="-fx-font-weight: bold;"/>
+        <Label text="Create a backup of the entire database" style="-fx-text-fill: #7f8c8d;"/>
+        <Button text="Create Backup" onAction="#createBackup"
+                style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+        <TextArea fx:id="backupStatus" prefHeight="100" editable="false"/>
+    </VBox>
+
+    <!-- Restore Section -->
+    <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 10;">
+        <Label text="Restore Backup" style="-fx-font-weight: bold;"/>
+        <Label text="WARNING: Restoring will overwrite current data!" style="-fx-text-fill: #e74c3c;"/>
+        <ComboBox fx:id="backupList" promptText="Select backup file"/>
+        <Button text="Restore Selected" onAction="#restoreBackup"
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+    </VBox>
+
+    <!-- Backup History -->
+    <VBox spacing="10" VBox.vgrow="ALWAYS">
+        <Label text="Backup History" style="-fx-font-weight: bold;"/>
+        <TableView fx:id="table" prefHeight="200">
+            <columns>
+                <TableColumn fx:id="colFileName" text="File Name" prefWidth="300"/>
+                <TableColumn fx:id="colSize" text="Size" prefWidth="100"/>
+                <TableColumn fx:id="colDate" text="Date" prefWidth="150"/>
+                <TableColumn fx:id="colVerified" text="Verified" prefWidth="80"/>
+            </columns>
+        </TableView>
+        <Button text="Refresh History" onAction="#refreshHistory"
+                style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+    </VBox>
+
+</VBox>

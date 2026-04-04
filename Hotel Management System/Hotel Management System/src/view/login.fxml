@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+
+<VBox spacing="20" alignment="CENTER"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.LoginController"
+      style="-fx-background-color: linear-gradient(to bottom, #2c3e50, #3498db);">
+
+    <padding>
+        <Insets top="50" bottom="50" left="40" right="40"/>
+    </padding>
+
+    <Label text="Hotel Management System"
+           style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+    <TextField fx:id="username" promptText="Username"
+               style="-fx-background-radius: 12; -fx-padding: 12; -fx-font-size: 14px;"/>
+
+    <PasswordField fx:id="password" promptText="Password"
+                   style="-fx-background-radius: 12; -fx-padding: 12; -fx-font-size: 14px;"/>
+
+    <Button text="Login"
+            onAction="#login"
+            style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 12;"/>
+
+</VBox>
