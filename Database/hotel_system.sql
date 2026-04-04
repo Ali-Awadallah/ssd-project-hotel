@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 04, 2026 at 05:37 PM
+-- Generation Time: Apr 04, 2026 at 06:08 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -52,7 +52,18 @@ INSERT INTO `audit_logs` (`id`, `user_id`, `action`, `timestamp`) VALUES
 (11, 1, 'Reset password for user: manager', '2026-04-04 10:54:35'),
 (20, NULL, 'Login failed for user: manager', '2026-04-04 11:14:30'),
 (21, NULL, 'Login failed for user: manager', '2026-04-04 11:14:35'),
-(22, 2, 'Login success', '2026-04-04 11:16:53');
+(22, 2, 'Login success', '2026-04-04 11:16:53'),
+(23, NULL, 'Login failed for user: admin', '2026-04-04 16:00:45'),
+(24, NULL, 'Login failed for user: admin', '2026-04-04 16:01:00'),
+(25, NULL, 'Login failed for user: manager', '2026-04-04 16:01:27'),
+(26, NULL, 'Login failed for user: manager', '2026-04-04 16:01:58'),
+(27, 2, 'Login success', '2026-04-04 16:02:38'),
+(28, NULL, 'Login failed for user: admin', '2026-04-04 16:02:54'),
+(30, 1, 'Login success', '2026-04-04 16:05:52'),
+(31, 1, 'Reset password for user: admin', '2026-04-04 16:06:12'),
+(32, 1, 'Login success', '2026-04-04 16:06:42'),
+(33, 1, 'Created new user: Abdulrahman', '2026-04-04 16:07:10'),
+(34, 1, 'Deleted user: Abdulrahman', '2026-04-04 16:07:18');
 
 -- --------------------------------------------------------
 
@@ -190,9 +201,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`, `failed_attempts`, `locked_until`, `last_login`, `is_active`) VALUES
-(1, 'admin', '$2a$10$BRv3vLjZkRLc3iDWzlDfO.Cg.coo1183VDN97DSNyM7Ru.4u6Jtqq', 'Admin', 5, NULL, NULL, 1),
-(2, 'reception', '$2a$10$ms3mlM3Ty3dfTHYRp.NtLujwxb6CamvFo5EC2T3JSrFWjAKPz2OI6', 'Receptionist', 0, NULL, '2026-04-04 14:16:53', 1),
-(3, 'manager', '$2a$10$7J8jHiZXAYQkz7Ypsxk.GOpg8T6VdzmMsql/u/bA6kQtIlsG0bPem', 'Manager', 5, NULL, NULL, 1);
+(1, 'admin', '$2a$10$YHyUJTVsnYc3x3jVg2O5aO6jmiA3/JoXNJN2L4VS6mHkinMfwxq.K', 'Admin', 0, NULL, '2026-04-04 19:06:42', 1),
+(2, 'reception', '$2a$10$ms3mlM3Ty3dfTHYRp.NtLujwxb6CamvFo5EC2T3JSrFWjAKPz2OI6', 'Receptionist', 0, NULL, '2026-04-04 19:02:38', 1),
+(3, 'manager', '$2a$10$7J8jHiZXAYQkz7Ypsxk.GOpg8T6VdzmMsql/u/bA6kQtIlsG0bPem', 'Manager', 2, NULL, NULL, 1);
 
 --
 -- Indexes for dumped tables
@@ -259,7 +270,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `audit_logs`
 --
 ALTER TABLE `audit_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `backup_records`
@@ -295,7 +306,7 @@ ALTER TABLE `service_requests`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
