@@ -31,48 +31,45 @@ public class DashboardController {
 
         sidebar.getChildren().clear();
 
-        // Add welcome label
         Label welcomeLabel = new Label("Welcome,\n" + currentUser.getUsername());
         welcomeLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 0 0 20 0;");
         welcomeLabel.setWrapText(true);
         sidebar.getChildren().add(welcomeLabel);
 
-        // Dashboard button (available to all)
         addMenuButton("Dashboard", this::showHome, "#2980b9");
 
-        // Room Search (available to all)
-        addMenuButton("Search Rooms", this::openRoomSearch, "#3498db");
+        if (currentUser.canSearchRooms()) {
+            addMenuButton("Search Rooms", this::openRoomSearch, "#3498db");
+        }
 
-        // Reservations (available to all)
-        addMenuButton("Reservations", this::openReservation, "#27ae60");
+        if (currentUser.canManageReservations()) {
+            addMenuButton("Reservations", this::openReservation, "#27ae60");
+        }
 
-        // Payments (available to all)
-        addMenuButton("Payments", this::openPayment, "#8e44ad");
+        if (currentUser.canManagePayments()) {
+            addMenuButton("Payments", this::openPayment, "#8e44ad");
+        }
 
-        // Service Requests (available to all)
-        addMenuButton("Service Requests", this::openServiceRequests, "#f39c12");
+        if (currentUser.canManageServiceRequests()) {
+            addMenuButton("Service Requests", this::openServiceRequests, "#f39c12");
+        }
 
-        // Reports (only Admin and Manager)
         if (currentUser.canViewReports()) {
             addMenuButton("Reports", this::openReports, "#e67e22");
         }
 
-        // User Management (only Admin)
         if (currentUser.canManageUsers()) {
             addMenuButton("User Management", this::openUserManagement, "#e74c3c");
         }
 
-        // Backup Management (only Admin)
         if (currentUser.canManageBackups()) {
             addMenuButton("Backup & Restore", this::openBackup, "#16a085");
         }
 
-        // Add spacer
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
         sidebar.getChildren().add(spacer);
 
-        // Logout button at bottom
         addMenuButton("Logout", this::logout, "#c0392b");
     }
 
@@ -104,30 +101,58 @@ public class DashboardController {
     }
 
     public void openRoomSearch() {
+        if (!currentUser.canSearchRooms()) {
+            showAccessDenied();
+            return;
+        }
         loadPage("/view/room_search.fxml");
     }
 
     public void openReservation() {
+        if (!currentUser.canManageReservations()) {
+            showAccessDenied();
+            return;
+        }
         loadPage("/view/reservation.fxml");
     }
 
     public void openPayment() {
+        if (!currentUser.canManagePayments()) {
+            showAccessDenied();
+            return;
+        }
         loadPage("/view/payment.fxml");
     }
 
     public void openServiceRequests() {
+        if (!currentUser.canManageServiceRequests()) {
+            showAccessDenied();
+            return;
+        }
         loadPage("/view/service_requests.fxml");
     }
 
     public void openReports() {
+        if (!currentUser.canViewReports()) {
+            showAccessDenied();
+            return;
+        }
         loadPage("/view/reports.fxml");
     }
 
     public void openUserManagement() {
+        if (!currentUser.canManageUsers()) {
+            showAccessDenied();
+            return;
+        }
         loadPage("/view/user_management.fxml");
     }
 
     public void openBackup() {
+        if (!currentUser.canManageBackups()) {
+            showAccessDenied();
+            return;
+        }
         loadPage("/view/backup.fxml");
     }
 
@@ -138,7 +163,7 @@ public class DashboardController {
             confirm.setHeaderText(null);
             confirm.setContentText("Are you sure you want to logout?");
 
-            if (confirm.showAndWait().get() == ButtonType.OK) {
+            if (confirm.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
                 Stage stage = (Stage) contentArea.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
                 stage.setScene(new Scene(loader.load()));
@@ -179,6 +204,14 @@ public class DashboardController {
             e.printStackTrace();
             showAlert("Error", "Could not load page: " + e.getMessage());
         }
+    }
+
+    private void showAccessDenied() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Access Denied");
+        alert.setHeaderText(null);
+        alert.setContentText("You do not have permission to access this module.");
+        alert.showAndWait();
     }
 
     private void showAlert(String title, String message) {

@@ -12,7 +12,6 @@ public class User {
     private Timestamp lastLogin;
     private boolean isActive;
 
-    // Getters and Setters...
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -37,13 +36,16 @@ public class User {
     public boolean isActive() { return isActive; }
     public void setActive(boolean active) { isActive = active; }
 
-    // Role permission methods
+    public boolean canSearchRooms() {
+        return role.equals("Admin") || role.equals("Receptionist");
+    }
+
     public boolean canManageReservations() {
-        return role.equals("Admin") || role.equals("Manager") || role.equals("Receptionist");
+        return role.equals("Admin") || role.equals("Receptionist");
     }
 
     public boolean canManagePayments() {
-        return role.equals("Admin") || role.equals("Manager") || role.equals("Receptionist");
+        return role.equals("Admin") || role.equals("Receptionist");
     }
 
     public boolean canViewReports() {
@@ -59,7 +61,7 @@ public class User {
     }
 
     public boolean canManageServiceRequests() {
-        return role.equals("Admin") || role.equals("Manager") || role.equals("Receptionist");
+        return role.equals("Admin") || role.equals("Manager");
     }
 
     public String getDisplayName() {
