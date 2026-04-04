@@ -50,7 +50,7 @@ public class AuthService {
                 }
 
                 String storedPassword = rs.getString("password");
-
+                System.out.println("Dev ");
                 System.out.println("Username entered: " + trimmedUsername);
                 System.out.println("Password entered: " + trimmedPassword);
                 System.out.println("Stored hash: " + storedPassword);

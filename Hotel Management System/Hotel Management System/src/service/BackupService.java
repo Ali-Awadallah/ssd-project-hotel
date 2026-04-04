@@ -32,7 +32,7 @@ public class BackupService {
             ProcessBuilder pb = new ProcessBuilder(
                     mysqldumpPath,
                     "-u", "root",
-                    "--password=",
+                    "--password=dacs",
                     "--host=localhost",
                     "hotel_system",
                     "--result-file=" + backupFile
@@ -148,9 +148,66 @@ public class BackupService {
         }
     }
 
+    private String findMysql() {
+        String[] possiblePaths = {
+                "mysql",
+                "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql.exe",
+                "C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql.exe",
+                "C:\\xampp\\mysql\\bin\\mysql.exe",
+                "C:\\wamp64\\bin\\mysql\\mysql8.0\\bin\\mysql.exe",
+                "/usr/bin/mysql",
+                "/usr/local/bin/mysql"
+        };
+
+        for (String path : possiblePaths) {
+            try {
+                ProcessBuilder pb = new ProcessBuilder(path, "--version");
+                Process p = pb.start();
+                int exitCode = p.waitFor();
+                if (exitCode == 0) {
+                    return path;
+                }
+            } catch (Exception e) {
+            }
+        }
+        return null;
+    }
+
     public void restoreBackup(String backupFile) throws Exception {
-        // Note: Restore is more complex and requires mysqldump or careful SQL execution
-        // For now, show a message that restore requires manual intervention
-        throw new Exception("Restore requires MySQL command line tools. Please use phpMyAdmin to restore.");
+        try {
+            String mysqlPath = findMysql();
+            if (mysqlPath == null) {
+                throw new Exception("mysql command line tool not found");
+            }
+
+            String dbPassword = "dacs";
+
+            ProcessBuilder pb = new ProcessBuilder(
+                    "cmd.exe", "/c",
+                    "\"" + mysqlPath + "\" -u root --password=" + dbPassword + " --host=localhost hotel_system < \"" + backupFile + "\""
+            );
+
+            pb.redirectErrorStream(true);
+            Process process = pb.start();
+
+            java.io.BufferedReader reader = new java.io.BufferedReader(
+                    new java.io.InputStreamReader(process.getInputStream())
+            );
+
+            StringBuilder output = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+
+            int exitCode = process.waitFor();
+
+            if (exitCode != 0) {
+                throw new Exception("Restore cannot be done outside of the myphpadmin, please go there to restore the backup");
+            }
+
+        } catch (Exception e) {
+            throw new Exception("Restore failed: " + e.getMessage());
+        }
     }
 }
