@@ -26,17 +26,15 @@ There are three roles in the system:
 ### Admin
 The admin has full access to the system. This includes managing users, viewing reports, and handling backups.
 
-admin:admin123
+admin:admin_password123
 
 ### Manager
 The manager can work with reservations, payments, service requests, and reports.
-
-manager:manager123
+in order to log in into manager, login using admin and reset the password
 
 ### Receptionist
 The receptionist can manage reservations, payments, service requests, and room searches.
-
-reception:reception123
+in order to log in into Receptionist, login using admin and reset the password
 
 
 ### Database Credentials
