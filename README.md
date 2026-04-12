@@ -34,7 +34,7 @@ in order to log in into manager, login using admin and reset the password
 
 ### Receptionist
 The receptionist can manage reservations, payments, service requests, and room searches.
-in order to log in into Receptionist, login using admin and reset the password
+reception_password123
 
 
 ### Database Credentials
